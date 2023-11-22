@@ -10,7 +10,7 @@ router.post('/', authenticateJWT, playerontroller.add);
 router.delete('/:id', authenticateJWT, playerontroller.remove);
 router.get('/', authenticateJWT, playerontroller.getAll);
 router.get('/:id', authenticateJWT, playerontroller.getById);
-
+router.put('/:id', authenticateJWT, playerontroller.modify);
 
 
 export default router;

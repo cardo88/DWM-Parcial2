@@ -9,7 +9,7 @@ let lastId: number = 25;
 const validPositions = ['GK', 'DF', 'MD', 'FW'];
 
 export const add = (req: Request, res: Response) => {
-  const { name, position, suspended, injured} = req.body;
+  const { name, position, suspended, injured } = req.body;
 
   // Validar que los campos requeridos estén presentes
   if (!name || !position || suspended === undefined || injured === undefined) {
@@ -55,18 +55,6 @@ export const remove = (req: Request, res: Response) => {
 };
 
 
-// export const search = (req: Request, res: Response) => {
-//   const { firstName, lastName } = req.query;
-//   const results = player.filter(player => {
-//     const matchFirstName = (player.name as string || '').toLowerCase().includes((firstName as string || '').toLowerCase());
-//     const matchLastName = (player.apellido as string || '').toLowerCase().includes((lastName as string || '').toLowerCase());
-//     return matchFirstName && matchLastName;
-//   });
-//   res.json({ results });
-// };
-
-
-
 export const getAll = (req: Request, res: Response) => {
   res.json({ success: true, player });
 };
@@ -92,10 +80,45 @@ export const getById = (req: Request, res: Response) => {
 };
 
 
-// export const companyHasPeople = (companyId: number): boolean => {
-//   // Verificar si hay players asociadas a la compañía
-//   return player.some(player => player.empresa === companyId);
-// };
+export const modify = (req: Request, res: Response) => {
+  const { id, position, suspended, injured } = req.body;
+
+
+  const playerId = parseInt(id, 10);
+  if (isNaN(playerId)) {
+    return res.status(400).json({ message: 'ID de player no válido.' });
+  }
+
+  const foundPlayer = player.find(p => p.id === playerId.toString());
+
+  if (!foundPlayer) {
+    return res.status(404).json({ message: 'player no encontrada.' });
+  }
+
+  // Validar que los campos requeridos estén presentes
+  if (!position || suspended === undefined || injured === undefined) {
+    return res.status(400).json({ success: false, message: 'Todos los campos son obligatorios!' });
+  }
+
+  if (!validPositions.includes(position)) {
+    return res.status(400).json({ success: false, message: 'Posición no válida' });
+  }
+
+  const playerIndex = player.findIndex((playerItem) => playerItem.id === id);
+  if (playerIndex >= 0) {
+    player[playerIndex] = {
+      id: player[playerIndex].id,
+      name: player[playerIndex].name,
+      position: req.body.position,
+      suspended: req.body.suspended,
+      injured: req.body.injured,
+    };
+    return res.status(200).json({ success: true, player : player[playerIndex] });
+  }
+
+  res.status(404).json({ message: "Could not find Player for this id." });
+};
+
 
 
 // Guardar en memoria
