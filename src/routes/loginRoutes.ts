@@ -2,6 +2,7 @@ import express from "express";
 // import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { findUserByUsername } from "../db/users";
+import { createUser } from "../db/users";
 
 const router = express.Router();
 
@@ -32,4 +33,23 @@ router.post("/login", (req, res) => {
     });
 });
 
+
+router.post("/signup", (req, res) => {
+  const { username, password } = req.body;
+
+  // Validar que los campos requeridos estén presentes
+  if (!username || !password) {
+    return res
+      .status(400)
+      .json({ message: "Todos los campos son obligatorios" });
+  }
+
+  // Crear usuario
+  const newUser = createUser(username, password);
+
+  return res.status(201).json({ message: "Usuario creado con éxito", newUser });
+});
+
 export default router;
+
+

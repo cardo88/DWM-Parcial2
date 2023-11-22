@@ -4,6 +4,7 @@ import peopleRoutes from './routes/playerRoutes';
 import authenticateJWT from './middlewares/authenticateJWT';
 import loginRouter from './routes/loginRoutes';
 import protectedRouter from './routes/protectedRoutes';
+import signupRouter from './routes/loginRoutes';
 import cors from 'cors';
 
 const app = express();
@@ -16,6 +17,9 @@ app.use(bodyParser.json());
 // Rutas para autenticación
 app.use("/api", loginRouter);
 app.use("/api", protectedRouter);
+
+// Ruta para signip
+app.use("/api", signupRouter);
 
 // Verificar la autenticación
 // app.use(authenticateJWT);  //<<<<<<<------ esta linea de codigo me hizo perder una noche entera!!!!!
