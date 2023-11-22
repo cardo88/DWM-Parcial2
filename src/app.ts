@@ -21,14 +21,8 @@ app.use("/api", protectedRouter);
 // Ruta para signip
 app.use("/api", signupRouter);
 
-// Verificar la autenticación
-// app.use(authenticateJWT);  //<<<<<<<------ esta linea de codigo me hizo perder una noche entera!!!!!
-
 // Rutas para player
 app.use('/players', peopleRoutes);
-
-
-
 
 
 // Rutas de ejemplo

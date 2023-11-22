@@ -1,8 +1,8 @@
 import express from "express";
 // import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { findUserByUsername } from "../db/users";
-import { createUser } from "../db/users";
+import { findUserByUsername } from "../controllers/usersController";
+import { createUser } from "../controllers/usersController";
 
 const router = express.Router();
 
